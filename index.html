@@ -3,27 +3,30 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Healthcare Translation App</title>
+  <title>MediTranslate - Medical Translation App</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --sky-blue: #87CEEB;
-      --sky-pink: #FFB6C1;
-      --sky-green: #98FB98;
-      --light-blue: #E6F2FF;
-      --light-pink: #FFECF0;
-      --light-green: #F0FFF0;
+      --medical-blue: #1A73E8;
+      --medical-teal: #00BFA5;
+      --medical-purple: #8E24AA;
+      --medical-green: #34A853;
+      --medical-red: #EA4335;
+      --medical-light: #E8F0FE;
+      --medical-white: #FFFFFF;
+      --medical-gray: #F8F9FA;
     }
     
     body {
-      background: linear-gradient(135deg, var(--sky-blue) 0%, var(--sky-pink) 50%, var(--sky-green) 100%);
+      background: linear-gradient(135deg, var(--medical-light) 0%, var(--medical-white) 50%, #E3F2FD 100%);
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     
-    /* Bubble animation */
+    /* Medical-themed bubble animation */
     .bubbles {
       position: absolute;
       width: 100%;
@@ -38,11 +41,19 @@
     .bubble {
       position: absolute;
       bottom: -100px;
-      background-color: rgba(255, 255, 255, 0.3);
       border-radius: 50%;
       opacity: 0.5;
       animation: rise 15s infinite ease-in;
     }
+    
+    .bubble:nth-child(1) { background-color: rgba(26, 115, 232, 0.1); }
+    .bubble:nth-child(2) { background-color: rgba(0, 191, 165, 0.1); }
+    .bubble:nth-child(3) { background-color: rgba(142, 36, 170, 0.1); }
+    .bubble:nth-child(4) { background-color: rgba(52, 168, 83, 0.1); }
+    .bubble:nth-child(5) { background-color: rgba(234, 67, 53, 0.1); }
+    .bubble:nth-child(6) { background-color: rgba(26, 115, 232, 0.1); }
+    .bubble:nth-child(7) { background-color: rgba(0, 191, 165, 0.1); }
+    .bubble:nth-child(8) { background-color: rgba(142, 36, 170, 0.1); }
     
     @keyframes rise {
       0% {
@@ -138,7 +149,7 @@
       width: 4px; 
       height: 10px; 
       margin: 0 2px; 
-      background: #dc2626; 
+      background: var(--medical-blue); 
       display: inline-block; 
       border-radius: 2px; 
       animation: wave 1.2s infinite ease-in-out;
@@ -157,16 +168,16 @@
     
     /* Glassmorphism effect */
     .glass {
-      background: rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.18);
-      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
       transition: all 0.3s ease;
     }
     
     .glass:hover {
-      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
       transform: translateY(-2px);
     }
     
@@ -178,39 +189,51 @@
     
     /* Button styles */
     .btn-primary {
-      background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+      background: var(--medical-blue);
       color: white;
       transition: all 0.3s ease;
     }
     
     .btn-primary:hover {
-      background: linear-gradient(to right, #00f2fe 0%, #4facfe 100%);
+      background: #1557B0;
       transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 10px 20px rgba(26, 115, 232, 0.2);
     }
     
     .btn-secondary {
-      background: linear-gradient(to right, #ff9a9e 0%, #fad0c4 100%);
+      background: var(--medical-teal);
       color: white;
       transition: all 0.3s ease;
     }
     
     .btn-secondary:hover {
-      background: linear-gradient(to right, #fad0c4 0%, #ff9a9e 100%);
+      background: #009688;
       transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 10px 20px rgba(0, 191, 165, 0.2);
     }
     
     .btn-success {
-      background: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
+      background: var(--medical-green);
       color: white;
       transition: all 0.3s ease;
     }
     
     .btn-success:hover {
-      background: linear-gradient(to right, #38f9d7 0%, #43e97b 100%);
+      background: #2E8B57;
       transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 10px 20px rgba(52, 168, 83, 0.2);
+    }
+    
+    .btn-danger {
+      background: var(--medical-red);
+      color: white;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-danger:hover {
+      background: #D32F2F;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(234, 67, 53, 0.2);
     }
     
     /* Page transition */
@@ -238,20 +261,15 @@
       to { opacity: 1; transform: translateY(0); }
     }
     
-    /* Smooth scrolling */
-    html {
-      scroll-behavior: smooth;
-    }
-    
     /* Custom select styles */
     select {
-      background: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.9);
       transition: all 0.3s ease;
     }
     
     select:hover {
       background: rgba(255, 255, 255, 1);
-      box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.3);
+      box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2);
     }
     
     /* Transcript styles */
@@ -278,14 +296,14 @@
     }
     
     .original-message {
-      background: var(--light-blue);
+      background: var(--medical-light);
       border-bottom-left-radius: 4px;
       align-self: flex-start;
       text-align: left;
     }
     
     .translated-message {
-      background: var(--light-green);
+      background: #E8F5E9;
       border-bottom-right-radius: 4px;
       align-self: flex-end;
       text-align: right;
@@ -315,7 +333,7 @@
     }
     
     .nav-pill {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.8);
       border-radius: 50px;
       padding: 5px;
       display: inline-flex;
@@ -327,27 +345,85 @@
       border-radius: 50px;
       cursor: pointer;
       transition: all 0.3s ease;
+      font-weight: 500;
     }
     
     .nav-item.active {
-      background: white;
+      background: var(--medical-blue);
+      color: white;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
-
-    /* Permission request styles */
-    .permission-box {
+    
+    /* Language select styles */
+    .lang-select {
       background: rgba(255, 255, 255, 0.9);
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 20px;
-      text-align: center;
-      border: 2px solid #4facfe;
+      border-radius: 12px;
+      padding: 12px 16px;
+      border: 1px solid #E5E7EB;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
     }
+    
+    .lang-select:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+      transform: translateY(-2px);
+    }
+    
+    .lang-select option {
+      padding: 8px;
+    }
+    
+    /* Medical Icons */
+    .medical-icon {
+      font-size: 1.2em;
+      margin-right: 8px;
+    }
+    
+    /* Emergency button */
+    .emergency-btn {
+      background: linear-gradient(45deg, var(--medical-red), #FF6B6B);
+      color: white;
+      transition: all 0.3s ease;
+    }
+    
+    .emergency-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(234, 67, 53, 0.3);
+    }
+    
+    /* Medical card styles */
+    .medical-card {
+      border-left: 4px solid var(--medical-blue);
+      background: rgba(255, 255, 255, 0.9);
+    }
+    
+    .symptom-card {
+      border-left: 4px solid var(--medical-teal);
+      background: rgba(255, 255, 255, 0.9);
+    }
+    
+    .treatment-card {
+      border-left: 4px solid var(--medical-green);
+      background: rgba(255, 255, 255, 0.9);
+    }
+    
+    /* Medical color accents */
+    .text-medical-blue { color: var(--medical-blue); }
+    .text-medical-teal { color: var(--medical-teal); }
+    .text-medical-purple { color: var(--medical-purple); }
+    .text-medical-green { color: var(--medical-green); }
+    .text-medical-red { color: var(--medical-red); }
+    
+    .bg-medical-blue { background-color: var(--medical-blue); }
+    .bg-medical-teal { background-color: var(--medical-teal); }
+    .bg-medical-purple { background-color: var(--medical-purple); }
+    .bg-medical-green { background-color: var(--medical-green); }
+    .bg-medical-red { background-color: var(--medical-red); }
   </style>
 </head>
 <body class="flex flex-col min-h-screen">
 
-  <!-- Bubble background -->
+  <!-- Medical-themed Bubble background -->
   <div class="bubbles">
     <div class="bubble"></div>
     <div class="bubble"></div>
@@ -360,33 +436,40 @@
   </div>
 
   <!-- Navbar -->
-  <nav class="glass shadow-md sticky top-0 z-50">
+  <nav class="bg-white shadow-md sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <h1 class="text-xl font-bold text-blue-600 flex items-center">
-        <i class="fas fa-heartbeat mr-2 text-red-500"></i> MediBridge Translator
+      <h1 class="text-xl font-bold text-medical-blue flex items-center">
+        <i class="fas fa-stethoscope mr-2 text-medical-blue"></i> MediTranslate - Healthcare Translation
       </h1>
+      <div class="flex items-center">
+        <span class="text-sm text-gray-600 mr-4">Developer: Rohit Bisht</span>
+        <button class="emergency-btn px-4 py-2 rounded-lg font-medium">
+          <i class="fas fa-ambulance mr-2"></i> Emergency
+        </button>
+      </div>
     </div>
   </nav>
 
   <!-- Navigation Pills -->
   <div class="nav-container mt-6">
     <div class="nav-pill">
-      <div class="nav-item active" data-page="home">Home</div>
+      <div class="nav-item active" data-page="home">Translation</div>
+      <div class="nav-item" data-page="medical">Medical Terms</div>
       <div class="nav-item" data-page="about">About</div>
       <div class="nav-item" data-page="contact">Contact</div>
     </div>
   </div>
 
-  <!-- Home Page -->
+  <!-- Home Page (Translation) -->
   <main id="home-page" class="page active content-container flex-1 max-w-6xl mx-auto w-full px-4 py-8">
     <header class="mb-8 flex items-center justify-between flex-wrap gap-4">
       <div class="glass rounded-2xl p-6 floating">
-        <h2 class="text-3xl font-bold text-blue-600">Healthcare Translation <i class="fas fa-language ml-2"></i></h2>
-        <p class="text-gray-700 mt-2">Demo: Voice → Transcript → Translate → Speak</p>
+        <h2 class="text-3xl font-bold text-medical-blue">Medical Translation <i class="fas fa-language ml-2"></i></h2>
+        <p class="text-gray-700 mt-2">Breaking language barriers between doctors and patients</p>
       </div>
       <!-- Mic indicator -->
-      <div id="micIndicator" class="hidden items-center gap-3 text-red-600 glass rounded-2xl p-4">
-        <div class="w-4 h-4 bg-red-600 rounded-full pulse"></div>
+      <div id="micIndicator" class="hidden items-center gap-3 text-medical-blue glass rounded-2xl p-4">
+        <div class="w-4 h-4 bg-medical-blue rounded-full pulse"></div>
         <span class="text-sm font-medium">Recording...</span>
         <div class="flex items-end h-6">
           <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
@@ -394,22 +477,11 @@
       </div>
     </header>
 
-    <!-- Permission Request -->
-    <div id="permissionBox" class="permission-box">
-      <h3 class="text-lg font-semibold text-blue-600 mb-2">
-        <i class="fas fa-microphone-alt mr-2"></i> Microphone Permission Required
-      </h3>
-      <p class="text-gray-700 mb-4">This app needs microphone access for speech recognition. Please allow microphone permissions when prompted.</p>
-      <button id="requestPermissionBtn" class="btn-primary px-4 py-2 rounded-lg font-medium">
-        <i class="fas fa-check-circle mr-2"></i> Allow Microphone Access
-      </button>
-    </div>
-
     <!-- Controls -->
     <div class="flex flex-wrap items-center gap-4 mb-8 glass rounded-2xl p-6">
       <label class="flex flex-col text-sm flex-1 min-w-[160px]">
-        <span class="font-medium mb-1 text-gray-700"><i class="fas fa-microphone mr-1"></i> From Language</span>
-        <select id="sourceLang" class="rounded-xl border-0 px-4 py-3 mt-1 shadow-sm">
+        <span class="font-medium mb-1 text-gray-700"><i class="fas fa-user-md medical-icon text-medical-blue"></i> Doctor Language</span>
+        <select id="sourceLang" class="lang-select">
           <option value="en-US">🇺🇸 English</option>
           <option value="hi-IN">🇮🇳 Hindi</option>
           <option value="es-ES">🇪🇸 Spanish</option>
@@ -420,8 +492,8 @@
       </label>
 
       <label class="flex flex-col text-sm flex-1 min-w-[160px]">
-        <span class="font-medium mb-1 text-gray-700"><i class="fas fa-globe mr-1"></i> To Language</span>
-        <select id="targetLang" class="rounded-xl border-0 px-4 py-3 mt-1 shadow-sm">
+        <span class="font-medium mb-1 text-gray-700"><i class="fas fa-user medical-icon text-medical-teal"></i> Patient Language</span>
+        <select id="targetLang" class="lang-select">
           <option value="hi">🇮🇳 Hindi</option>
           <option value="en" selected>🇺🇸 English</option>
           <option value="es">🇪🇸 Spanish</option>
@@ -432,17 +504,17 @@
       </label>
 
       <div class="flex flex-wrap gap-3 mt-4 w-full justify-center">
-        <button id="startBtn" class="btn-primary px-5 py-3 rounded-xl font-medium" disabled>
-          <i class="fas fa-play-circle mr-2"></i> Start
+        <button id="startBtn" class="btn-primary px-5 py-3 rounded-xl font-medium">
+          <i class="fas fa-play-circle mr-2"></i> Start Translation
         </button>
-        <button id="stopBtn" class="btn-secondary px-5 py-3 rounded-xl font-medium" disabled>
+        <button id="stopBtn" class="btn-danger px-5 py-3 rounded-xl font-medium">
           <i class="fas fa-stop-circle mr-2"></i> Stop
         </button>
         <button id="clearBtn" class="btn-secondary px-5 py-3 rounded-xl font-medium">
           <i class="fas fa-broom mr-2"></i> Clear
         </button>
-        <button id="speakBtn" class="btn-success px-5 py-3 rounded-xl font-medium" disabled>
-          <i class="fas fa-volume-up mr-2"></i> Speak
+        <button id="speakBtn" class="btn-success px-5 py-3 rounded-xl font-medium">
+          <i class="fas fa-volume-up mr-2"></i> Speak Translation
         </button>
       </div>
     </div>
@@ -450,14 +522,14 @@
     <!-- Panels -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
       <div class="glass rounded-2xl p-6 transcript-box flex flex-col">
-        <h3 class="font-semibold mb-4 text-blue-600 text-lg">
-          <i class="fas fa-comment-dots mr-2"></i> Original Transcript
+        <h3 class="font-semibold mb-4 text-medical-blue text-lg">
+          <i class="fas fa-user-md medical-icon"></i> Doctor's Message
         </h3>
         <div id="originalText" class="space-y-3 flex-1 overflow-y-auto"></div>
       </div>
       <div class="glass rounded-2xl p-6 transcript-box flex flex-col">
-        <h3 class="font-semibold mb-4 text-green-600 text-lg">
-          <i class="fas fa-comments mr-2"></i> Translated Transcript
+        <h3 class="font-semibold mb-4 text-medical-teal text-lg">
+          <i class="fas fa-user medical-icon"></i> Patient's Translation
         </h3>
         <div id="translatedText" class="space-y-3 flex-1 overflow-y-auto"></div>
       </div>
@@ -465,29 +537,101 @@
 
     <!-- Status -->
     <p id="status" class="text-sm text-gray-700 glass rounded-2xl p-4 text-center">
-      <i class="fas fa-info-circle mr-2"></i> Status: Please allow microphone access to use speech recognition
+      <!-- <i class="fas fa-info-circle mr-2"></i> Status: idle -->
     </p>
+  </main>
+
+  <!-- Medical Terms Page -->
+  <main id="medical-page" class="page content-container flex-1 max-w-6xl mx-auto w-full px-4 py-8">
+    <div class="glass rounded-2xl p-8 mb-8">
+      <h2 class="text-3xl font-bold text-medical-blue mb-6">
+        <i class="fas fa-book-medical mr-3"></i> Common Medical Terms
+      </h2>
+      <p class="text-gray-700 mb-6">Quick reference for common medical terms that can be translated using this app.</p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="medical-card p-5 rounded-xl">
+          <h3 class="font-bold text-lg text-medical-blue mb-3">Symptoms</h3>
+          <ul class="space-y-2 text-gray-700">
+            <li><i class="fas fa-thermometer-half text-medical-red mr-2"></i> Fever</li>
+            <li><i class="fas fa-head-side-cough text-medical-purple mr-2"></i> Cough</li>
+            <li><i class="fas fa-dizzy text-medical-teal mr-2"></i> Dizziness</li>
+            <li><i class="fas fa-lungs text-medical-blue mr-2"></i> Shortness of breath</li>
+            <li><i class="fas fa-pain-scale text-medical-red mr-2"></i> Pain</li>
+          </ul>
+        </div>
+        
+        <div class="symptom-card p-5 rounded-xl">
+          <h3 class="font-bold text-lg text-medical-teal mb-3">Diagnoses</h3>
+          <ul class="space-y-2 text-gray-700">
+            <li><i class="fas fa-virus text-medical-red mr-2"></i> Infection</li>
+            <li><i class="fas fa-heartbeat text-medical-red mr-2"></i> Hypertension</li>
+            <li><i class="fas fa-syringe text-medical-blue mr-2"></i> Diabetes</li>
+            <li><i class="fas fa-lungs-virus text-medical-purple mr-2"></i> Asthma</li>
+            <li><i class="fas fa-brain text-medical-teal mr-2"></i> Migraine</li>
+          </ul>
+        </div>
+        
+        <div class="treatment-card p-5 rounded-xl">
+          <h3 class="font-bold text-lg text-medical-green mb-3">Treatments</h3>
+          <ul class="space-y-2 text-gray-700">
+            <li><i class="fas fa-pills text-medical-blue mr-2"></i> Medication</li>
+            <li><i class="fas fa-procedures text-medical-teal mr-2"></i> Surgery</li>
+            <li><i class="fas fa-band-aid text-medical-green mr-2"></i> Dressing</li>
+            <li><i class="fas fa-prescription-bottle text-medical-purple mr-2"></i> Prescription</li>
+            <li><i class="fas fa-stethoscope text-medical-blue mr-2"></i> Examination</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="glass rounded-2xl p-8">
+      <h2 class="text-3xl font-bold text-medical-purple mb-6">
+        <i class="fas fa-comment-medical mr-3"></i> Common Medical Questions
+      </h2>
+      <div class="space-y-4 text-gray-700">
+        <div class="bg-blue-50 p-4 rounded-xl">
+          <p class="font-medium text-medical-blue"><i class="fas fa-question-circle mr-2"></i> "Where does it hurt?"</p>
+          <p class="text-sm mt-2">Use this to ask patients about the location of their pain or discomfort.</p>
+        </div>
+        
+        <div class="bg-green-50 p-4 rounded-xl">
+          <p class="font-medium text-medical-green"><i class="fas fa-question-circle mr-2"></i> "How long have you had these symptoms?"</p>
+          <p class="text-sm mt-2">Important for understanding the duration and progression of an illness.</p>
+        </div>
+        
+        <div class="bg-purple-50 p-4 rounded-xl">
+          <p class="font-medium text-medical-purple"><i class="fas fa-question-circle mr-2"></i> "Are you allergic to any medications?"</p>
+          <p class="text-sm mt-2">Critical safety question before prescribing any treatment.</p>
+        </div>
+        
+        <div class="bg-teal-50 p-4 rounded-xl">
+          <p class="font-medium text-medical-teal"><i class="fas fa-question-circle mr-2"></i> "Do you have any existing medical conditions?"</p>
+          <p class="text-sm mt-2">Helps understand the patient's medical history for accurate diagnosis.</p>
+        </div>
+      </div>
+    </div>
   </main>
 
   <!-- About Page -->
   <main id="about-page" class="page content-container flex-1 max-w-4xl mx-auto w-full px-4 py-8">
     <div class="glass rounded-2xl p-8">
-      <h2 class="text-3xl font-bold text-blue-600 mb-6">
-        <i class="fas fa-info-circle mr-3"></i> About This Project
+      <h2 class="text-3xl font-bold text-medical-blue mb-6">
+        <i class="fas fa-info-circle mr-3"></i> About MediTranslate
       </h2>
       <div class="space-y-5 text-gray-700">
-        <p class="text-lg">This healthcare translation application is designed to bridge the communication gap between patients and healthcare providers who speak different languages. <i class="fas fa-hand-holding-medical ml-1"></i></p>
+        <p class="text-lg">MediTranslate is a specialized real-time translation application designed specifically for healthcare settings to bridge communication gaps between doctors and patients who speak different languages.</p>
         
-        <p>In medical situations, clear communication can be a matter of life and death. This tool helps eliminate language barriers by providing real-time speech translation, allowing doctors to understand symptoms and concerns, and enabling patients to comprehend diagnoses and treatment plans. <i class="fas fa-stethoscope ml-1"></i></p>
+        <p>In medical situations, clear communication is critical for accurate diagnosis, treatment, and patient comfort. This application helps eliminate language barriers by providing real-time speech translation of medical terminology, symptoms, diagnoses, and treatment instructions.</p>
         
-        <p>Our mission is to make healthcare accessible to everyone, regardless of language differences, ensuring that all patients receive the care they need and deserve. <i class="fas fa-heart ml-1"></i></p>
+        <p>Our mission is to ensure that every patient receives proper medical care regardless of language differences, and that healthcare providers can communicate effectively with all patients.</p>
         
-        <div class="bg-blue-50 p-5 rounded-2xl border-l-4 border-blue-500 mt-6">
-          <p class="font-medium text-blue-800 text-lg">
-            <i class="fas fa-lightbulb mr-2"></i> This application was created by Rohit Bisht to help eliminate communication barriers between doctors and patients.
+        <div class="bg-blue-50 p-5 rounded-2xl border-l-4 border-medical-blue mt-6">
+          <p class="font-medium text-medical-blue text-lg">
+            <i class="fas fa-lightbulb mr-2"></i> This application was developed by Rohit Bisht.
           </p>
           <p class="text-sm mt-3">
-            <i class="fas fa-rocket mr-2"></i> The goal is to improve patient outcomes through better understanding between medical professionals and patients from diverse linguistic backgrounds.
+            <i class="fas fa-rocket mr-2"></i> The goal is to improve healthcare outcomes through better understanding between medical professionals and patients from diverse linguistic backgrounds.
           </p>
         </div>
       </div>
@@ -497,45 +641,48 @@
   <!-- Contact Page -->
   <main id="contact-page" class="page content-container flex-1 max-w-4xl mx-auto w-full px-4 py-8">
     <div class="glass rounded-2xl p-8">
-      <h2 class="text-3xl font-bold text-blue-600 mb-6">
-        <i class="fas fa-envelope mr-3"></i> Contact Us
+      <h2 class="text-3xl font-bold text-medical-blue mb-6">
+        <i class="fas fa-envelope mr-3"></i> Contact Developer
       </h2>
       <div class="space-y-5 text-gray-700">
-        <div class="bg-pink-50 p-5 rounded-2xl border-l-4 border-pink-500">
-          <p class="font-medium text-pink-800 text-lg">
-            <i class="fas fa-exclamation-circle mr-2"></i> This is a MediBridge prototype application.
+        <div class="bg-blue-50 p-5 rounded-2xl border-l-4 border-medical-blue">
+          <p class="font-medium text-medical-blue text-lg">
+            <i class="fas fa-user-md mr-2"></i> Rohit Bisht - Healthcare Translation App Developer
           </p>
           <p class="mt-3">
-            <i class="fas fa-hard-hat mr-2"></i> The contact functionality is still in development. We're working hard to create the best possible experience for healthcare translation.
+            This application was created specifically to address the critical need for accurate medical translation in healthcare settings where language barriers can impact patient care.
           </p>
         </div>
         
         <p>
-          <i class="fas fa-clock mr-2"></i> Please check back soon for updates. For immediate needs, you can reach out to us at:
+          <i class="fas fa-clock mr-2"></i> For more information about this medical translation solution, please reach out:
         </p>
         
         <div class="bg-green-50 p-5 rounded-2xl">
-          <p class="font-semibold text-green-800">
+          <p class="font-semibold text-medical-green">
             <i class="fas fa-envelope mr-2"></i> Email: animeboy252003@gmail.com
           </p>
-          <p class="font-semibold text-green-800 mt-3">
-            <i class="fas fa-phone mr-2"></i> Phone: +91 6398720297
+          <p class="font-semibold text-medical-green mt-3">
+            <i class="fas fa-globe mr-2"></i> Mob No: +91-6398720297
+          </p>
+          <p class="font-semibold text-medical-green mt-3">
+            <i class="fas fa-map-marker-alt mr-2"></i> Location: India
           </p>
         </div>
         
         <p>
-          <i class="fas fa-thumbs-up mr-2"></i> We appreciate your interest in our healthcare translation solution and look forward to sharing the completed version with you soon.
+          <i class="fas fa-thumbs-up mr-2"></i> We appreciate your interest in our medical translation solution and look forward to improving healthcare communication worldwide.
         </p>
       </div>
     </div>
   </main>
 
   <!-- Footer -->
-  <footer class="glass border-t py-6 mt-8 content-container">
+  <footer class="bg-white border-t py-6 mt-8">
     <div class="max-w-6xl mx-auto px-4 text-center text-sm text-gray-700">
-      <p>© 2025 MediBridge Translator. Created by Rohit Bisht. <i class="fas fa-code ml-1"></i></p>
+      <p>© 2025 MediTranslate - Medical Healthcare Translation App. Developed by Rohit Bisht.</p>
       <p class="mt-2">
-        <i class="fas fa-exclamation-triangle mr-1"></i> Works best in Chrome/Edge over <strong>https</strong> or <strong>localhost</strong>.
+        <i class="fas fa-heartbeat text-medical-red mr-1"></i> Bridging language gaps in healthcare for better patient outcomes
       </p>
     </div>
   </footer>
@@ -553,7 +700,7 @@ function navigateToPage(pageId) {
     item.classList.remove('active');
   });
   
-  document.querySelector(`[data-page="${pageId}"]`).classList.add('active');
+  document.querySelector(`.nav-item[data-page="${pageId}"]`).classList.add('active');
 }
 
 document.querySelectorAll('.nav-item').forEach(item => {
@@ -574,13 +721,10 @@ const statusDiv = document.getElementById('status');
 const srcSelect = document.getElementById('sourceLang');
 const tgtSelect = document.getElementById('targetLang');
 const micIndicator = document.getElementById('micIndicator');
-const permissionBox = document.getElementById('permissionBox');
-const requestPermissionBtn = document.getElementById('requestPermissionBtn');
 
 let recognition = null;
 let isRecording = false;
 let lastTranslatedSegment = '';
-let hasMicrophonePermission = false;
 
 function updateStatus(t){ 
   statusDiv.innerHTML = `<i class="fas fa-info-circle mr-2"></i> Status: ${t}`;
@@ -595,33 +739,40 @@ function showMic(show){
   }
 }
 
-// Add emoji based on text content
-function addEmoji(text) {
-  const healthTerms = [
+// Add emoji based on medical text content
+function addMedicalEmoji(text) {
+  const medicalTerms = [
     {term: 'pain', emoji: '😫'},
-    {term: 'hurt', emoji: '😣'},
-    {term: 'doctor', emoji: '👨‍⚕️'},
-    {term: 'nurse', emoji: '👩‍⚕️'},
-    {term: 'hospital', emoji: '🏥'},
-    {term: 'medicine', emoji: '💊'},
-    {term: 'headache', emoji: '🤕'},
-    {term: 'stomach', emoji: '🤢'},
-    {term: 'better', emoji: '🙂'},
-    {term: 'thank', emoji: '🙏'},
-    {term: 'hello', emoji: '👋'},
-    {term: 'emergency', emoji: '🚑'},
-    {term: 'help', emoji: '🆘'},
-    {term: 'heart', emoji: '❤️'},
-    {term: 'cough', emoji: '😷'},
-    {term: 'cold', emoji: '🥶'},
+    {term: 'hurt', emoji: '🤕'},
     {term: 'fever', emoji: '🤒'},
+    {term: 'headache', emoji: '🤕'},
+    {term: 'medicine', emoji: '💊'},
+    {term: 'doctor', emoji: '👨‍⚕️'},
+    {term: 'hospital', emoji: '🏥'},
+    {term: 'ambulance', emoji: '🚑'},
+    {term: 'heart', emoji: '❤️'},
+    {term: 'lungs', emoji: '🫁'},
+    {term: 'stomach', emoji: '🫀'},
     {term: 'allergy', emoji: '🤧'},
+    {term: 'cough', emoji: '😮‍💨'},
+    {term: 'surgery', emoji: '🩺'},
+    {term: 'injection', emoji: '💉'},
+    {term: 'blood', emoji: '🩸'},
+    {term: 'test', emoji: '🧪'},
+    {term: 'x-ray', emoji: '📋'},
+    {term: 'emergency', emoji: '🚨'},
+    {term: 'better', emoji: '🙂'},
+    {term: 'worse', emoji: '😔'},
+    {term: 'thank', emoji: '🙏'},
+    {term: 'help', emoji: '🆘'},
+    {term: 'appointment', emoji: '📅'},
+    {term: 'prescription', emoji: '📝'},
   ];
   
   let emojiToAdd = '';
   const lowerText = text.toLowerCase();
   
-  for (const {term, emoji} of healthTerms) {
+  for (const {term, emoji} of medicalTerms) {
     if (lowerText.includes(term)) {
       emojiToAdd = emoji;
       break;
@@ -633,64 +784,16 @@ function addEmoji(text) {
     const textLength = text.length;
     if (textLength < 10) emojiToAdd = '💬';
     else if (textLength < 20) emojiToAdd = '🗣️';
-    else emojiToAdd = '📝';
+    else emojiToAdd = '📋';
   }
   
   return emojiToAdd + ' ' + text;
 }
 
-// Check browser support
 if (!('SpeechRecognition' in window) && !('webkitSpeechRecognition' in window)) {
   updateStatus('❌ SpeechRecognition not supported in this browser.');
   startBtn.disabled = true;
-  permissionBox.innerHTML = `
-    <h3 class="text-lg font-semibold text-red-600 mb-2">
-      <i class="fas fa-exclamation-triangle mr-2"></i> Browser Not Supported
-    </h3>
-    <p class="text-gray-700">Your browser does not support speech recognition. Please try Chrome, Edge, or another supported browser.</p>
-  `;
 }
-
-// Request microphone permission
-requestPermissionBtn.addEventListener('click', async () => {
-  try {
-    // Request microphone access
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    
-    // Stop all tracks to release the microphone
-    stream.getTracks().forEach(track => track.stop());
-    
-    // Update UI
-    hasMicrophonePermission = true;
-    permissionBox.style.display = 'none';
-    startBtn.disabled = false;
-    stopBtn.disabled = false;
-    speakBtn.disabled = false;
-    updateStatus('Ready to start recording');
-    
-    console.log('Microphone permission granted');
-  } catch (error) {
-    console.error('Error getting microphone permission:', error);
-    updateStatus('❌ Microphone access denied. Please allow microphone permission.');
-    
-    // Show specific error message
-    if (error.name === 'NotAllowedError') {
-      permissionBox.innerHTML = `
-        <h3 class="text-lg font-semibold text-red-600 mb-2">
-          <i class="fas fa-exclamation-triangle mr-2"></i> Permission Denied
-        </h3>
-        <p class="text-gray-700 mb-4">Microphone access was denied. Please allow microphone permissions in your browser settings and try again.</p>
-        <button id="retryPermissionBtn" class="btn-primary px-4 py-2 rounded-lg font-medium">
-          <i class="fas fa-redo mr-2"></i> Retry
-        </button>
-      `;
-      
-      document.getElementById('retryPermissionBtn').addEventListener('click', () => {
-        location.reload();
-      });
-    }
-  }
-});
 
 startBtn.addEventListener('click', startRecognition);
 stopBtn.addEventListener('click', stopRecognition);
@@ -705,11 +808,6 @@ speakBtn.addEventListener('click', () => {
 });
 
 function startRecognition(){
-  if (!hasMicrophonePermission) {
-    updateStatus('❌ Please allow microphone access first');
-    return;
-  }
-  
   if (isRecording) return;
   const srcLang = srcSelect.value;
   const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -720,23 +818,11 @@ function startRecognition(){
 
   recognition.onstart = () => { 
     isRecording = true; 
-    updateStatus('🎤 Recording...'); 
+    updateStatus('🎤 Recording medical conversation...'); 
     startBtn.disabled = true; 
     showMic(true); 
   };
-  
-  recognition.onerror = (e) => { 
-    updateStatus('⚠️ Error: ' + e.error); 
-    console.error('Speech recognition error:', e);
-    
-    // Handle specific errors
-    if (e.error === 'not-allowed') {
-      updateStatus('❌ Microphone access not allowed. Please check permissions.');
-      hasMicrophonePermission = false;
-      permissionBox.style.display = 'block';
-    }
-  };
-  
+  recognition.onerror = (e) => { updateStatus('⚠️ Error: ' + e.error); };
   recognition.onend = () => { 
     isRecording = false; 
     updateStatus('Idle'); 
@@ -771,7 +857,7 @@ function startRecognition(){
       if (prevInterim) prevInterim.remove();
 
       const last = originalTextDiv.lastElementChild;
-      const emojiText = addEmoji(final);
+      const emojiText = addMedicalEmoji(final);
       
       if (last && last.classList.contains("final-segment")) {
         last.textContent = emojiText;
@@ -785,9 +871,9 @@ function startRecognition(){
 
       const tgtLang = tgtSelect.value;
       try {
-        updateStatus('🤖 Translating...');
+        updateStatus('🤖 Translating medical terms...');
         let translated = await translateWithGemini(final, tgtLang);
-        const translatedWithEmoji = addEmoji(translated);
+        const translatedWithEmoji = addMedicalEmoji(translated);
 
         const lastT = translatedTextDiv.lastElementChild;
         if (lastT && lastT.classList.contains("final-segment")) {
@@ -802,89 +888,41 @@ function startRecognition(){
         translatedTextDiv.scrollTop = translatedTextDiv.scrollHeight;
         lastTranslatedSegment = translated;
       } catch (err) {
-        console.error('Translation error:', err);
         const td = document.createElement('div'); 
         td.className = 'message translated-message';
         td.textContent = '❌ [translation failed]';
         translatedTextDiv.appendChild(td);
       } finally {
-        updateStatus('🎤 Recording...');
+        updateStatus('🎤 Recording medical conversation...');
       }
     }
   };
 
-  try {
-    recognition.start();
-  } catch (error) {
-    console.error('Error starting recognition:', error);
-    updateStatus('❌ Error starting speech recognition');
-  }
+  recognition.start();
 }
 
-function stopRecognition(){ 
-  if (recognition) {
-    recognition.stop();
-  }
-}
+function stopRecognition(){ if (recognition) recognition.stop(); }
 
 /* -----------------------
    Translation (Gemini only)
    ----------------------- */
 async function translateWithGemini(text, targetLang){
-  // For demo purposes, we'll use a simple translation approach
-  // In a real application, you would use a proper translation API
-  
-  // Simulate API call delay
-  await new Promise(resolve => setTimeout(resolve, 500));
-  
-  // Simple translation mapping for demo
-  const translations = {
-    'hi': {
-      'hello': 'नमस्ते',
-      'pain': 'दर्द',
-      'headache': 'सिरदर्द',
-      'stomach': 'पेट',
-      'fever': 'बुखार',
-      'doctor': 'डॉक्टर',
-      'medicine': 'दवा',
-      'thank you': 'धन्यवाद'
-    },
-    'es': {
-      'hello': 'hola',
-      'pain': 'dolor',
-      'headache': 'dolor de cabeza',
-      'stomach': 'estómago',
-      'fever': 'fiebre',
-      'doctor': 'médico',
-      'medicine': 'medicina',
-      'thank you': 'gracias'
-    },
-    'fr': {
-      'hello': 'bonjour',
-      'pain': 'douleur',
-      'headache': 'mal de tête',
-      'stomach': 'estomac',
-      'fever': 'fièvre',
-      'doctor': 'médecin',
-      'medicine': 'médicament',
-      'thank you': 'merci'
+  const res = await fetch(
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyCJjG35a3ECknVU-vKWscq3KrLKOkrUwZs",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [{
+          parts: [{
+            text: `Translate this medical conversation into ${targetLang}: ${text}`
+          }]
+        }]
+      })
     }
-  };
-  
-  // Simple word-by-word translation for demo
-  const words = text.toLowerCase().split(' ');
-  const targetTranslations = translations[targetLang] || {};
-  
-  let translatedText = words.map(word => {
-    return targetTranslations[word] || `[${word}]`;
-  }).join(' ');
-  
-  // Capitalize first letter
-  if (translatedText.length > 0) {
-    translatedText = translatedText.charAt(0).toUpperCase() + translatedText.slice(1);
-  }
-  
-  return translatedText || `[Translation to ${targetLang}]`;
+  );
+  const data = await res.json();
+  return data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "[Gemini error]";
 }
 
 /* -----------------------
@@ -907,15 +945,11 @@ function speakText(text){
   
   ttsLang = langMap[tgtLang] || 'en-US';
   
-  if ('speechSynthesis' in window) {
-    const utter = new SpeechSynthesisUtterance(text);
-    utter.lang = ttsLang;
-    speechSynthesis.cancel();
-    speechSynthesis.speak(utter);
-    updateStatus('🔊 Speaking...');
-  } else {
-    updateStatus('❌ Text-to-speech not supported in this browser');
-  }
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = ttsLang;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(utter);
+  updateStatus('🔊 Speaking translation...');
 }
 
 // Generate bubbles dynamically
@@ -939,6 +973,11 @@ function generateBubbles() {
 
 // Initialize bubbles
 generateBubbles();
+
+// Emergency button functionality
+document.querySelector('.emergency-btn').addEventListener('click', function() {
+  alert('Emergency mode activated! This would typically connect to emergency services with location data and medical information.');
+});
 </script>
 </body>
 </html>
