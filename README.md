@@ -1,4 +1,4 @@
-# Nao-Medical-Healthcare-chatbot
+# Medical-Healthcare-chatbot
 
 
 Healthcare Translation App
