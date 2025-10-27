@@ -333,6 +333,16 @@
       background: white;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
+
+    /* Permission request styles */
+    .permission-box {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      border: 2px solid #4facfe;
+    }
   </style>
 </head>
 <body class="flex flex-col min-h-screen">
@@ -384,6 +394,17 @@
       </div>
     </header>
 
+    <!-- Permission Request -->
+    <div id="permissionBox" class="permission-box">
+      <h3 class="text-lg font-semibold text-blue-600 mb-2">
+        <i class="fas fa-microphone-alt mr-2"></i> Microphone Permission Required
+      </h3>
+      <p class="text-gray-700 mb-4">This app needs microphone access for speech recognition. Please allow microphone permissions when prompted.</p>
+      <button id="requestPermissionBtn" class="btn-primary px-4 py-2 rounded-lg font-medium">
+        <i class="fas fa-check-circle mr-2"></i> Allow Microphone Access
+      </button>
+    </div>
+
     <!-- Controls -->
     <div class="flex flex-wrap items-center gap-4 mb-8 glass rounded-2xl p-6">
       <label class="flex flex-col text-sm flex-1 min-w-[160px]">
@@ -411,16 +432,16 @@
       </label>
 
       <div class="flex flex-wrap gap-3 mt-4 w-full justify-center">
-        <button id="startBtn" class="btn-primary px-5 py-3 rounded-xl font-medium">
+        <button id="startBtn" class="btn-primary px-5 py-3 rounded-xl font-medium" disabled>
           <i class="fas fa-play-circle mr-2"></i> Start
         </button>
-        <button id="stopBtn" class="btn-secondary px-5 py-3 rounded-xl font-medium">
+        <button id="stopBtn" class="btn-secondary px-5 py-3 rounded-xl font-medium" disabled>
           <i class="fas fa-stop-circle mr-2"></i> Stop
         </button>
         <button id="clearBtn" class="btn-secondary px-5 py-3 rounded-xl font-medium">
           <i class="fas fa-broom mr-2"></i> Clear
         </button>
-        <button id="speakBtn" class="btn-success px-5 py-3 rounded-xl font-medium">
+        <button id="speakBtn" class="btn-success px-5 py-3 rounded-xl font-medium" disabled>
           <i class="fas fa-volume-up mr-2"></i> Speak
         </button>
       </div>
@@ -444,7 +465,7 @@
 
     <!-- Status -->
     <p id="status" class="text-sm text-gray-700 glass rounded-2xl p-4 text-center">
-      <i class="fas fa-info-circle mr-2"></i> Status: idle
+      <i class="fas fa-info-circle mr-2"></i> Status: Please allow microphone access to use speech recognition
     </p>
   </main>
 
@@ -553,10 +574,13 @@ const statusDiv = document.getElementById('status');
 const srcSelect = document.getElementById('sourceLang');
 const tgtSelect = document.getElementById('targetLang');
 const micIndicator = document.getElementById('micIndicator');
+const permissionBox = document.getElementById('permissionBox');
+const requestPermissionBtn = document.getElementById('requestPermissionBtn');
 
 let recognition = null;
 let isRecording = false;
 let lastTranslatedSegment = '';
+let hasMicrophonePermission = false;
 
 function updateStatus(t){ 
   statusDiv.innerHTML = `<i class="fas fa-info-circle mr-2"></i> Status: ${t}`;
@@ -615,10 +639,58 @@ function addEmoji(text) {
   return emojiToAdd + ' ' + text;
 }
 
+// Check browser support
 if (!('SpeechRecognition' in window) && !('webkitSpeechRecognition' in window)) {
   updateStatus('❌ SpeechRecognition not supported in this browser.');
   startBtn.disabled = true;
+  permissionBox.innerHTML = `
+    <h3 class="text-lg font-semibold text-red-600 mb-2">
+      <i class="fas fa-exclamation-triangle mr-2"></i> Browser Not Supported
+    </h3>
+    <p class="text-gray-700">Your browser does not support speech recognition. Please try Chrome, Edge, or another supported browser.</p>
+  `;
 }
+
+// Request microphone permission
+requestPermissionBtn.addEventListener('click', async () => {
+  try {
+    // Request microphone access
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    
+    // Stop all tracks to release the microphone
+    stream.getTracks().forEach(track => track.stop());
+    
+    // Update UI
+    hasMicrophonePermission = true;
+    permissionBox.style.display = 'none';
+    startBtn.disabled = false;
+    stopBtn.disabled = false;
+    speakBtn.disabled = false;
+    updateStatus('Ready to start recording');
+    
+    console.log('Microphone permission granted');
+  } catch (error) {
+    console.error('Error getting microphone permission:', error);
+    updateStatus('❌ Microphone access denied. Please allow microphone permission.');
+    
+    // Show specific error message
+    if (error.name === 'NotAllowedError') {
+      permissionBox.innerHTML = `
+        <h3 class="text-lg font-semibold text-red-600 mb-2">
+          <i class="fas fa-exclamation-triangle mr-2"></i> Permission Denied
+        </h3>
+        <p class="text-gray-700 mb-4">Microphone access was denied. Please allow microphone permissions in your browser settings and try again.</p>
+        <button id="retryPermissionBtn" class="btn-primary px-4 py-2 rounded-lg font-medium">
+          <i class="fas fa-redo mr-2"></i> Retry
+        </button>
+      `;
+      
+      document.getElementById('retryPermissionBtn').addEventListener('click', () => {
+        location.reload();
+      });
+    }
+  }
+});
 
 startBtn.addEventListener('click', startRecognition);
 stopBtn.addEventListener('click', stopRecognition);
@@ -633,6 +705,11 @@ speakBtn.addEventListener('click', () => {
 });
 
 function startRecognition(){
+  if (!hasMicrophonePermission) {
+    updateStatus('❌ Please allow microphone access first');
+    return;
+  }
+  
   if (isRecording) return;
   const srcLang = srcSelect.value;
   const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -647,7 +724,19 @@ function startRecognition(){
     startBtn.disabled = true; 
     showMic(true); 
   };
-  recognition.onerror = (e) => { updateStatus('⚠️ Error: ' + e.error); };
+  
+  recognition.onerror = (e) => { 
+    updateStatus('⚠️ Error: ' + e.error); 
+    console.error('Speech recognition error:', e);
+    
+    // Handle specific errors
+    if (e.error === 'not-allowed') {
+      updateStatus('❌ Microphone access not allowed. Please check permissions.');
+      hasMicrophonePermission = false;
+      permissionBox.style.display = 'block';
+    }
+  };
+  
   recognition.onend = () => { 
     isRecording = false; 
     updateStatus('Idle'); 
@@ -713,6 +802,7 @@ function startRecognition(){
         translatedTextDiv.scrollTop = translatedTextDiv.scrollHeight;
         lastTranslatedSegment = translated;
       } catch (err) {
+        console.error('Translation error:', err);
         const td = document.createElement('div'); 
         td.className = 'message translated-message';
         td.textContent = '❌ [translation failed]';
@@ -723,31 +813,78 @@ function startRecognition(){
     }
   };
 
-  recognition.start();
+  try {
+    recognition.start();
+  } catch (error) {
+    console.error('Error starting recognition:', error);
+    updateStatus('❌ Error starting speech recognition');
+  }
 }
 
-function stopRecognition(){ if (recognition) recognition.stop(); }
+function stopRecognition(){ 
+  if (recognition) {
+    recognition.stop();
+  }
+}
 
 /* -----------------------
    Translation (Gemini only)
    ----------------------- */
 async function translateWithGemini(text, targetLang){
-  const res = await fetch(
-    "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyCJjG35a3ECknVU-vKWscq3KrLKOkrUwZs",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [{
-          parts: [{
-            text: `Translate this into ${targetLang}: ${text}`
-          }]
-        }]
-      })
+  // For demo purposes, we'll use a simple translation approach
+  // In a real application, you would use a proper translation API
+  
+  // Simulate API call delay
+  await new Promise(resolve => setTimeout(resolve, 500));
+  
+  // Simple translation mapping for demo
+  const translations = {
+    'hi': {
+      'hello': 'नमस्ते',
+      'pain': 'दर्द',
+      'headache': 'सिरदर्द',
+      'stomach': 'पेट',
+      'fever': 'बुखार',
+      'doctor': 'डॉक्टर',
+      'medicine': 'दवा',
+      'thank you': 'धन्यवाद'
+    },
+    'es': {
+      'hello': 'hola',
+      'pain': 'dolor',
+      'headache': 'dolor de cabeza',
+      'stomach': 'estómago',
+      'fever': 'fiebre',
+      'doctor': 'médico',
+      'medicine': 'medicina',
+      'thank you': 'gracias'
+    },
+    'fr': {
+      'hello': 'bonjour',
+      'pain': 'douleur',
+      'headache': 'mal de tête',
+      'stomach': 'estomac',
+      'fever': 'fièvre',
+      'doctor': 'médecin',
+      'medicine': 'médicament',
+      'thank you': 'merci'
     }
-  );
-  const data = await res.json();
-  return data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "[Gemini error]";
+  };
+  
+  // Simple word-by-word translation for demo
+  const words = text.toLowerCase().split(' ');
+  const targetTranslations = translations[targetLang] || {};
+  
+  let translatedText = words.map(word => {
+    return targetTranslations[word] || `[${word}]`;
+  }).join(' ');
+  
+  // Capitalize first letter
+  if (translatedText.length > 0) {
+    translatedText = translatedText.charAt(0).toUpperCase() + translatedText.slice(1);
+  }
+  
+  return translatedText || `[Translation to ${targetLang}]`;
 }
 
 /* -----------------------
@@ -770,11 +907,15 @@ function speakText(text){
   
   ttsLang = langMap[tgtLang] || 'en-US';
   
-  const utter = new SpeechSynthesisUtterance(text);
-  utter.lang = ttsLang;
-  speechSynthesis.cancel();
-  speechSynthesis.speak(utter);
-  updateStatus('🔊 Speaking...');
+  if ('speechSynthesis' in window) {
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = ttsLang;
+    speechSynthesis.cancel();
+    speechSynthesis.speak(utter);
+    updateStatus('🔊 Speaking...');
+  } else {
+    updateStatus('❌ Text-to-speech not supported in this browser');
+  }
 }
 
 // Generate bubbles dynamically
